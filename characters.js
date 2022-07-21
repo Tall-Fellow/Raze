@@ -9,13 +9,32 @@ class Character extends Entity {
         return this.HP > 0? false : true;
     }
 
-    checkBounds() {
+    checkBoundsV0() {
         // Y-axis
         if (this.Y < 0 || this.Y + this.hitboxHeight > this.ground.getFloor()) {
             this.Y = this.Y < 0? 0 : this.ground.getFloor() - this.hitboxHeight;
         }
         // X-axis
         if (this.X < 0 || this.X + this.hitboxWidth > canvas.width) {
+            this.X = this.X < 0? 0 : canvas.width - this.hitboxWidth;
+        }
+    }
+
+    checkBounds() {
+        // X-axis
+        //For mobs
+        if (this.team == 0) {
+            if (this.X < 0 && this.speedX > 0) {
+                this.speedX *= -1 * 1/2;
+            } 
+            
+            else if (this.X + this.hitboxWidth > canvas.width && this.speedX < 0) {
+                this.speedX *= -1 * 2/1;
+            }
+        }
+        
+        // For player
+        else if (this.team == 1 && (this.X < 0 || this.X + this.hitboxWidth > canvas.width)) {
             this.X = this.X < 0? 0 : canvas.width - this.hitboxWidth;
         }
     }

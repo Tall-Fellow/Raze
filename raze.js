@@ -71,11 +71,12 @@ function scaleCoeff(maxW, maxH, imgW, imgH) { return Math.min(maxW/imgW, maxH/im
 function updateTime() { 
     if (gameTime % lengthOfDay == 0) {
         ground.toggleTimeOfDay();
-        spawner.spawnChar(1, canvas.width, ground.getFloor() - 30); // Temp
-        spawner.spawnChar(1, canvas.width+10, ground.getFloor() - 28); // Temp
-        spawner.spawnChar(1, canvas.width+20, ground.getFloor() - 26); // Temp
-        spawner.spawnChar(1, canvas.width+30, ground.getFloor() - 24); // Temp
-        spawner.spawnChar(1, canvas.width+40, ground.getFloor() - 22); // Temp
+        
+        spawner.spawnChar(1, canvas.width-90, ground.getFloor() - 30); // Temp
+        spawner.spawnChar(1, canvas.width-80, ground.getFloor() - 28); // Temp
+        spawner.spawnChar(1, canvas.width-70, ground.getFloor() - 26); // Temp
+        spawner.spawnChar(1, canvas.width-60, ground.getFloor() - 24); // Temp
+        spawner.spawnChar(1, canvas.width-50, ground.getFloor() - 22); // Temp
     }
 
     gameTime++; 
