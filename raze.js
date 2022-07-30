@@ -4,7 +4,7 @@ var ctx          = canvas.getContext("2d");
 var gameTime     = 1;
 var dayTime      = true;
 var lengthOfDay  = 5;
-var ground       = new Ground(50, 2);
+var ground       = new Ground(75, 2);
 var characters   = new Array();
 var projectiles  = new Array();
 var spawner      = new Spawner(canvas, ctx, ground, charClasses, projClasses, characters, projectiles);
@@ -72,11 +72,11 @@ function updateTime() {
     if (gameTime % lengthOfDay == 0) {
         ground.toggleTimeOfDay();
         
-        spawner.spawnChar(1, canvas.width-90, ground.getFloor() - 30); // Temp
-        spawner.spawnChar(1, canvas.width-80, ground.getFloor() - 28); // Temp
-        spawner.spawnChar(1, canvas.width-70, ground.getFloor() - 26); // Temp
-        spawner.spawnChar(1, canvas.width-60, ground.getFloor() - 24); // Temp
-        spawner.spawnChar(1, canvas.width-50, ground.getFloor() - 22); // Temp
+        spawner.spawnChar(1, canvas.width-90, ground.getFloor()); // Temp
+        spawner.spawnChar(1, canvas.width-80, ground.getFloor()); // Temp
+        spawner.spawnChar(1, canvas.width-70, ground.getFloor()); // Temp
+        spawner.spawnChar(1, canvas.width-60, ground.getFloor()); // Temp
+        spawner.spawnChar(1, canvas.width-50, ground.getFloor()); // Temp
     }
 
     gameTime++; 
