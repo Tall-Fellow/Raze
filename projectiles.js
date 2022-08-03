@@ -5,11 +5,6 @@ class Projectile extends Entity {
         this.impact = false;
     }
 
-    updateLifeTime() {
-        this.lifeTime--;
-        return this.lifeTime <= 0? true : false;
-    }
-
     updatePosition() {
         super.updatePosition();
         if (this.onGround) { 
@@ -82,14 +77,3 @@ fireSprites[0].src = "media/fire/fireBall1.png";
 var projClasses = new Array();
 projClasses[0] = new Arrow(arrowSprites);
 projClasses[1] = new FireBreath(fireSprites);
-
-// Projectile functions
-function removeProjectile(index, projArr) {
-    var newProjArr = new Array();
-    for (let i = 0; i < projArr.length; i++) {
-        if (i == index) { continue; }
-        newProjArr.push(projArr[i]);
-    }
-
-    projArr = newProjArr;
-}

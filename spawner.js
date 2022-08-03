@@ -13,7 +13,7 @@ class Spawner {
     
     spawnChar(classID, posX, posY) {
         var char = this.charClasses[classID]
-        var c = new Character(
+        this.charArr.push(new Character(
             this.canvas, 
             this.ctx, 
             posX, 
@@ -27,9 +27,7 @@ class Spawner {
             char.speedY, 
             char.scale, 
             char.animationSpeed
-        );
-
-        this.charArr.push(c);
+        ));
     }
 
     spawnProj(classID, posX, posY) {

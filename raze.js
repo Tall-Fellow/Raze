@@ -8,6 +8,7 @@ var ground       = new Ground(75, 2);
 var characters   = new Array();
 var projectiles  = new Array();
 var spawner      = new Spawner(canvas, ctx, ground, charClasses, projClasses, characters, projectiles);
+var hero         = 0;
 var upPressed    = false;
 var downPressed  = false;
 var leftPressed  = false;
@@ -17,6 +18,7 @@ var spacePressed = false;
 
 function startup(refreshRate) {
     spawner.spawnChar(0, canvas.width / 3, canvas.height / 2);
+    hero = characters[0];
     setInterval(draw, refreshRate);
     setInterval(updateTime, 1000);
 }
@@ -41,18 +43,18 @@ function draw() {
     });
 
     projectiles.forEach(projectile => {
-        //if (projectile.collision(hero) && projectile.impact == false) {
-        //    hero.takeDamage(projectile);
-        //    projectile.setImpact();
-        //}
+        if (projectile.collision(hero) && projectile.impact == false) {
+           hero.takeDamage(projectile);
+           projectile.setImpact();
+        }
     });
 
-    // Misc
-        // Projectile management
+    // Projectile management
+    var delOffset = 0;
     for (let i = 0; i < projectiles.length; i++) {
         if (projectiles[i].updateLifeTime() || projectiles[i].isOutOfBounds()) {
-            removeProjectile(i, projectiles);
-            i--;
+            projectiles.splice(i - delOffset);
+            delOffset++;
         }
     }
     
@@ -77,6 +79,9 @@ function updateTime() {
         spawner.spawnChar(1, canvas.width-70, ground.getFloor()); // Temp
         spawner.spawnChar(1, canvas.width-60, ground.getFloor()); // Temp
         spawner.spawnChar(1, canvas.width-50, ground.getFloor()); // Temp
+
+        spawner.spawnProj(0, canvas.width-50, canvas.height/2); // Temp
+        spawner.spawnProj(0, canvas.width-50, canvas.height/3); // Temp
     }
 
     gameTime++; 

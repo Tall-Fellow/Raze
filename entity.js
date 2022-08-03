@@ -31,6 +31,11 @@ class Entity {
         this.Y -= this.speedY;
     }
 
+    updateLifeTime() {
+        this.lifeTime--;
+        return this.lifeTime <= 0? true : false;
+    }
+
     checkBounds() {
         // Y-axis
         if (this.Y < 0 || this.Y + this.hitboxHeight > this.ground.getFloor()) {
