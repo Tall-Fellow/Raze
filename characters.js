@@ -1,6 +1,8 @@
 class Character extends Entity {
-    constructor(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, scale, animationSpeed) {
+    constructor(canvas, ctx, x, y, sprites, ground, team, lifeTime, HP, damage, speedX, speedY, scale, animationSpeed) {
         super(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, scale, animationSpeed);
+        this.HP        = HP;
+        this.hpBarSize = HP;
     }
 
     // Return true if damage taken kills character
@@ -29,6 +31,28 @@ class Character extends Entity {
         // Y-axis
         if (this.Y < 0 || this.Y + this.hitboxHeight > this.ground.getFloor()) {
             this.Y = this.Y < 0? 0 : this.ground.getFloor() - this.hitboxHeight;
+        }
+    }
+
+    draw() {
+        super.draw();
+        
+        if (this.team == 1) {
+            var offset = this.canvas.width - (this.hpBarSize * 2) - (canvas.width * 0.05);
+            this.ctx.fillStyle = "#0aa824";
+            this.ctx.fillRect(offset, canvas.height * 0.05, this.HP*2, 20);
+            this.ctx.strokeStyle = "gold";
+            this.ctx.strokeRect(offset, canvas.height * 0.05, this.hpBarSize*2, 20);
+            this.ctx.fillStyle = "orange";
+            this.ctx.fillRect(offset, canvas.height * 0.05 + 30, this.HP*2, 20);
+            this.ctx.strokeRect(offset, canvas.height * 0.05 + 30, this.hpBarSize*2, 20);
+        }
+
+        else {      
+            this.ctx.fillStyle = "#0aa824";
+            this.ctx.fillRect(this.X + (this.hitboxWidth / 2) - (this.hpBarSize / 2), this.Y - 50, this.HP, 10);
+            this.ctx.strokeStyle = "gold";
+            this.ctx.strokeRect(this.X + (this.hitboxWidth / 2) - (this.hpBarSize / 2), this.Y - 50, this.hpBarSize, 10);
         }
     }
 }

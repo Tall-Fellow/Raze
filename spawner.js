@@ -22,6 +22,7 @@ class Spawner {
             this.ground, 
             char.team, 
             char.lifeTime, 
+            char.HP,
             char.damage, 
             char.speedX, 
             char.speedY, 

@@ -74,10 +74,10 @@ function updateTime() {
     if (gameTime % lengthOfDay == 0) {
         ground.toggleTimeOfDay();
         
-        spawner.spawnChar(1, canvas.width-90, ground.getFloor()); // Temp
-        spawner.spawnChar(1, canvas.width-80, ground.getFloor()); // Temp
-        spawner.spawnChar(1, canvas.width-70, ground.getFloor()); // Temp
-        spawner.spawnChar(1, canvas.width-60, ground.getFloor()); // Temp
+        //spawner.spawnChar(1, canvas.width-90, ground.getFloor()); // Temp
+        //spawner.spawnChar(1, canvas.width-80, ground.getFloor()); // Temp
+        //spawner.spawnChar(1, canvas.width-70, ground.getFloor()); // Temp
+        //spawner.spawnChar(1, canvas.width-60, ground.getFloor()); // Temp
         spawner.spawnChar(1, canvas.width-50, ground.getFloor()); // Temp
 
         spawner.spawnProj(0, canvas.width-50, canvas.height/2); // Temp
