@@ -3,12 +3,31 @@ class Character extends Entity {
         super(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, scale, animationSpeed);
         this.HP        = HP;
         this.hpBarSize = HP;
+
+        // For player only, bars gradient setup
+        if (team == 1) {
+            this.offset = this.canvas.width - (this.hpBarSize * 2) - (canvas.width * 0.05);
+            this.hpGradient = ctx.createLinearGradient(this.offset, 0, this.offset + this.hpBarSize * 2, 0);
+            this.hpGradient.addColorStop(0, "#00b529");
+            this.hpGradient.addColorStop(1, "#79e400");
+            
+            this.breathGradient = ctx.createLinearGradient(this.offset, 0, this.offset + this.hpBarSize * 2, 0);
+            this.breathGradient.addColorStop(0, "#ff8f00");
+            this.breathGradient.addColorStop(1, "#ffe500");
+        }
     }
 
     // Return true if damage taken kills character
     takeDamage(projectileEntity) {
         this.HP -= projectileEntity.damage;
-        return this.HP > 0? false : true;
+        if (this.HP <= 0) {
+            this.HP = 0;
+            return true;
+        }
+
+        else {
+            return false;
+        }
     }
 
     checkBounds() {
@@ -37,17 +56,19 @@ class Character extends Entity {
     draw() {
         super.draw();
         
+        // Player HP & Breath bars
         if (this.team == 1) {
-            var offset = this.canvas.width - (this.hpBarSize * 2) - (canvas.width * 0.05);
-            this.ctx.fillStyle = "#0aa824";
-            this.ctx.fillRect(offset, canvas.height * 0.05, this.HP*2, 20);
+            this.ctx.fillStyle = this.hpGradient;
+            this.ctx.fillRect(this.offset, canvas.height * 0.05, this.HP*2, 20);
+            this.ctx.fillStyle = this.breathGradient;
+            this.ctx.fillRect(this.offset, canvas.height * 0.05 + 30, this.HP*2, 20);
+
             this.ctx.strokeStyle = "gold";
-            this.ctx.strokeRect(offset, canvas.height * 0.05, this.hpBarSize*2, 20);
-            this.ctx.fillStyle = "orange";
-            this.ctx.fillRect(offset, canvas.height * 0.05 + 30, this.HP*2, 20);
-            this.ctx.strokeRect(offset, canvas.height * 0.05 + 30, this.hpBarSize*2, 20);
+            this.ctx.strokeRect(this.offset, canvas.height * 0.05, this.hpBarSize*2, 20);
+            this.ctx.strokeRect(this.offset, canvas.height * 0.05 + 30, this.hpBarSize*2, 20);
         }
 
+        // Mobs health bars
         else {      
             this.ctx.fillStyle = "#0aa824";
             this.ctx.fillRect(this.X + (this.hitboxWidth / 2) - (this.hpBarSize / 2), this.Y - 50, this.HP, 10);
