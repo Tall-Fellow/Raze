@@ -1,6 +1,20 @@
+function createHiPPICanvas(w, h) {
+    let cv    = document.createElement("canvas");
+    cv.width  = w * ratio;
+    cv.height = h * ratio;
+    cv.style.width  = w + "px";
+    cv.style.height = h + "px";
+    cv.getContext("2d").scale(ratio, ratio);
+    return cv;
+}
+
 // Global vars
-var canvas       = document.getElementById("canvas");
+var ratio        = window.devicePixelRatio;
+var cW           = 800;
+var cH           = 600;
+var canvas       = createHiPPICanvas(cW, cH);
 var ctx          = canvas.getContext("2d");
+var refreshRate  = 10;
 var gameTime     = 1;
 var dayTime      = true;
 var lengthOfDay  = 5;
@@ -16,10 +30,10 @@ var rightPressed = false;
 var spacePressed = false;
 // End global vars
 
-function startup(refreshRate) {
+function startup(refR) {
     spawner.spawnChar(0, canvas.width / 3, canvas.height / 2);
     hero = characters[0];
-    setInterval(draw, refreshRate);
+    setInterval(draw, refR);
     setInterval(updateTime, 1000);
 }
 
@@ -87,4 +101,18 @@ function updateTime() {
     gameTime++; 
 }
 
-startup(10);
+
+document.getElementById("canvas").appendChild(canvas);
+
+// Starting screen
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, cW, cH);
+
+ctx.textAlign = "center";
+ctx.fillStyle = "black";
+
+ctx.font = "40px monospace"
+ctx.fillText("Raze", cW / 2, cH / 2);
+
+ctx.font = "18px monospace";
+ctx.fillText("Press enter to play...", cW / 2, cH / 2 + 35);

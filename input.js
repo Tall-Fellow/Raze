@@ -1,5 +1,9 @@
 function keyDownHandler(e) {
     switch (e.code) {
+        case "Enter":
+            startup(refreshRate);
+            break;
+
         case "KeyW":
         case "ArrowUp":
             upPressed = true;
