@@ -6,7 +6,7 @@ class Character extends Entity {
 
         // For player only, bars gradient setup
         if (team == 1) {
-            this.offset = this.canvas.width - (this.hpBarSize * 2) - (canvas.width * 0.05);
+            this.offset = cW - (this.hpBarSize * 2) - (cW * 0.05);
             this.hpGradient = ctx.createLinearGradient(this.offset, 0, this.offset + this.hpBarSize * 2, 0);
             this.hpGradient.addColorStop(0, "#00b529");
             this.hpGradient.addColorStop(1, "#79e400");
@@ -38,13 +38,13 @@ class Character extends Entity {
                 this.speedX *= -1 * 1/2;
             } 
             
-            else if (this.X + this.hitboxWidth > canvas.width && this.speedX < 0) {
+            else if (this.X + this.hitboxWidth > cW && this.speedX < 0) {
                 this.speedX *= -1 * 2/1;
             }
         }
             // For player
-        else if (this.team == 1 && (this.X < 0 || this.X + this.hitboxWidth > canvas.width)) {
-            this.X = this.X < 0? 0 : canvas.width - this.hitboxWidth;
+        else if (this.team == 1 && (this.X < 0 || this.X + this.hitboxWidth > cW)) {
+            this.X = this.X < 0? 0 : cW - this.hitboxWidth;
         }
 
         // Y-axis
@@ -59,13 +59,13 @@ class Character extends Entity {
         // Player HP & Breath bars
         if (this.team == 1) {
             this.ctx.fillStyle = this.hpGradient;
-            this.ctx.fillRect(this.offset, canvas.height * 0.05, this.HP*2, 20);
+            this.ctx.fillRect(this.offset, cH * 0.05, this.HP*2, 20);
             this.ctx.fillStyle = this.breathGradient;
-            this.ctx.fillRect(this.offset, canvas.height * 0.05 + 30, this.HP*2, 20);
+            this.ctx.fillRect(this.offset, cH * 0.05 + 30, this.HP*2, 20);
 
             this.ctx.strokeStyle = "gold";
-            this.ctx.strokeRect(this.offset, canvas.height * 0.05, this.hpBarSize*2, 20);
-            this.ctx.strokeRect(this.offset, canvas.height * 0.05 + 30, this.hpBarSize*2, 20);
+            this.ctx.strokeRect(this.offset, cH * 0.05, this.hpBarSize*2, 20);
+            this.ctx.strokeRect(this.offset, cH * 0.05 + 30, this.hpBarSize*2, 20);
         }
 
         // Mobs health bars

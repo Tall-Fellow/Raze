@@ -42,8 +42,8 @@ class Entity {
             this.Y = this.Y < 0? 0 : this.ground.getFloor() - this.hitboxHeight;
         }
         // X-axis
-        if (this.X < 0 || this.X + this.hitboxWidth > canvas.width) {
-            this.X = this.X < 0? 0 : canvas.width - this.hitboxWidth;
+        if (this.X < 0 || this.X + this.hitboxWidth > cW) {
+            this.X = this.X < 0? 0 : cW - this.hitboxWidth;
         }
     }
 
@@ -51,7 +51,7 @@ class Entity {
         if (
             this.Y < 0 ||
             this.X < -this.hitboxWidth ||
-            this.X > this.canvas.width
+            this.X > cW
         ) {
             return true;
         }

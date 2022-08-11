@@ -18,14 +18,14 @@ class Ground {
         moonSprite.push(this.moonImg);
         
         this.dayFloorImg.onload = function() {
-            self.scale               = scaleCoeff(canvas.width, canvas.height, self.dayFloorImg.width, self.dayFloorImg.height);
+            self.scale               = scaleCoeff(cW, cH, self.dayFloorImg.width, self.dayFloorImg.height);
             self.dayFloorImg.height  = self.dayFloorImg.height * self.scale;
             self.dayFloorImg.width   = self.dayFloorImg.width * self.scale;
             self.scrollPos2          = self.dayFloorImg.width;
-            self.height              = canvas.height - self.dayFloorImg.height;
+            self.height              = cH - self.dayFloorImg.height;
         }
         this.nightFloorImg.onload = function() {
-            self.scale                = scaleCoeff(canvas.width, canvas.height, self.nightFloorImg.width, self.nightFloorImg.height);
+            self.scale                = scaleCoeff(cW, cH, self.nightFloorImg.width, self.nightFloorImg.height);
             self.nightFloorImg.height = self.nightFloorImg.height * self.scale;
             self.nightFloorImg.width  = self.nightFloorImg.width * self.scale;
         }
@@ -45,7 +45,7 @@ class Ground {
             // X & Y
             0, 0, 
             // Width & Height
-            canvas.width, canvas.height
+            cW, cH
         );
         this.moon.draw();
         // Night - BG End
@@ -58,7 +58,7 @@ class Ground {
             // X & Y
             0, 0, 
             // Width & Height
-            canvas.width, canvas.height
+            cW, cH
         );        
         ctx.globalAlpha = 1;
         // Day - BG End

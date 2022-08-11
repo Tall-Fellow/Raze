@@ -31,7 +31,7 @@ var spacePressed = false;
 // End global vars
 
 function startup(refR) {
-    spawner.spawnChar(0, canvas.width / 3, canvas.height / 2);
+    spawner.spawnChar(0, cW / 3, cH / 2);
     hero = characters[0];
     setInterval(draw, refR);
     setInterval(updateTime, 1000);
@@ -39,7 +39,7 @@ function startup(refR) {
 
 function draw() {
     // Clears whole canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, cW, cH);
 
     // Position updates
     updatePlayerPos();
@@ -92,10 +92,10 @@ function updateTime() {
         //spawner.spawnChar(1, canvas.width-80, ground.getFloor()); // Temp
         //spawner.spawnChar(1, canvas.width-70, ground.getFloor()); // Temp
         //spawner.spawnChar(1, canvas.width-60, ground.getFloor()); // Temp
-        spawner.spawnChar(1, canvas.width-50, ground.getFloor()); // Temp
+        spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
 
-        spawner.spawnProj(0, canvas.width-50, canvas.height/2); // Temp
-        spawner.spawnProj(0, canvas.width-50, canvas.height/3); // Temp
+        spawner.spawnProj(0, cW-50, cH/2); // Temp
+        spawner.spawnProj(0, cW-50, cH/3); // Temp
     }
 
     gameTime++; 
