@@ -15,14 +15,17 @@ var cH           = 600;
 var canvas       = createHiPPICanvas(cW, cH);
 var ctx          = canvas.getContext("2d");
 var refreshRate  = 10;
-var gameTime     = 1;
-var dayTime      = true;
 var lengthOfDay  = 5;
-var ground       = new Ground(75, 2);
-var characters   = new Array();
-var projectiles  = new Array();
-var spawner      = new Spawner(canvas, ctx, ground, charClasses, projClasses, characters, projectiles);
-var hero         = 0;
+var gameTime;
+var gameRunning;
+var game;
+var time;
+var dayTime;
+var ground;
+var characters;
+var projectiles;
+var spawner;
+var hero;
 var upPressed    = false;
 var downPressed  = false;
 var leftPressed  = false;
@@ -30,11 +33,28 @@ var rightPressed = false;
 var spacePressed = false;
 // End global vars
 
-function startup(refR) {
+function startGame() {
+    gameRunning = true;
+    gameTime    = 1;
+    dayTime     = true;
+
+    ground      = new Ground(75, 2);
+    characters  = new Array();
+    projectiles = new Array();
+    spawner     = new Spawner(canvas, ctx, ground, charClasses, projClasses, characters, projectiles);
+
     spawner.spawnChar(0, cW / 3, cH / 2);
     hero = characters[0];
-    setInterval(draw, refR);
-    setInterval(updateTime, 1000);
+
+    game = setInterval(draw, refreshRate);
+    time = setInterval(updateTime, 1000);
+}
+
+function resetGame() {
+    gameRunning = false;
+    clearInterval(game);
+    clearInterval(time);
+    ctx.clearRect(0, 0, cW, cH);
 }
 
 function draw() {
@@ -58,8 +78,11 @@ function draw() {
 
     projectiles.forEach(projectile => {
         if (projectile.collision(hero) && projectile.impact == false) {
-           hero.takeDamage(projectile);
-           projectile.setImpact();
+            if (hero.takeDamage(projectile)) {
+                playerDeath();
+            }
+
+            projectile.setImpact();
         }
     });
 
@@ -73,13 +96,15 @@ function draw() {
     }
     
     // Render
-    ground.draw();
-    characters.forEach(char => {
-        char.draw();
-    });
-    projectiles.forEach(projectile => {
-        projectile.draw();
-    });
+    if (gameRunning) {
+        ground.draw();
+        characters.forEach(char => {
+            char.draw();
+        });
+        projectiles.forEach(projectile => {
+            projectile.draw();
+        });
+    }
 }
 
 function scaleCoeff(maxW, maxH, imgW, imgH) { return Math.min(maxW/imgW, maxH/imgH); }
@@ -88,10 +113,10 @@ function updateTime() {
     if (gameTime % lengthOfDay == 0) {
         ground.toggleTimeOfDay();
         
-        //spawner.spawnChar(1, canvas.width-90, ground.getFloor()); // Temp
-        //spawner.spawnChar(1, canvas.width-80, ground.getFloor()); // Temp
-        //spawner.spawnChar(1, canvas.width-70, ground.getFloor()); // Temp
-        //spawner.spawnChar(1, canvas.width-60, ground.getFloor()); // Temp
+        //spawner.spawnChar(1, cW-90, ground.getFloor()); // Temp
+        //spawner.spawnChar(1, cW-80, ground.getFloor()); // Temp
+        //spawner.spawnChar(1, cW-70, ground.getFloor()); // Temp
+        //spawner.spawnChar(1, cW-60, ground.getFloor()); // Temp
         spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
 
         spawner.spawnProj(0, cW-50, cH/2); // Temp
@@ -101,8 +126,24 @@ function updateTime() {
     gameTime++; 
 }
 
-
+// Create canvas in DOM
 document.getElementById("canvas").appendChild(canvas);
+
+function playerDeath() {
+    resetGame();
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, cW, cH);
+    
+    ctx.textAlign = "center";
+    ctx.fillStyle = "black";
+    
+    ctx.font = "40px monospace"
+    ctx.fillText("You died...", cW / 2, cH / 2);
+    
+    ctx.font = "18px monospace";
+    ctx.fillText("Press enter to play again", cW / 2, cH / 2 + 35);
+}
 
 // Starting screen
 ctx.fillStyle = "white";

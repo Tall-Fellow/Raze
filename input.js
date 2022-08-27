@@ -1,7 +1,11 @@
 function keyDownHandler(e) {
     switch (e.code) {
         case "Enter":
-            startup(refreshRate);
+            if (!gameRunning) {
+                gameRunning = 1;
+                startGame();
+            }
+
             break;
 
         case "KeyW":
