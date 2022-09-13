@@ -14,7 +14,7 @@ var cW           = 800;
 var cH           = 600;
 var canvas       = createHiPPICanvas(cW, cH);
 var ctx          = canvas.getContext("2d");
-var refreshRate  = 10;
+var refreshRate  = 60;
 var lengthOfDay  = 5;
 var gameTime;
 var gameRunning;
@@ -46,10 +46,11 @@ function startGame() {
 
     spawner.spawnChar(0, cW / 3, cH / 2);
     hero    = characters[0];
-    heroSpd = 3;
+    heroSpd = 5;
 
-    game = setInterval(gameLoop, refreshRate);
+    game = setInterval(gameLogicLoop, 1000/refreshRate);
     time = setInterval(updateTime, 1000);
+    window.requestAnimationFrame(render);
 }
 
 function resetGame() {
@@ -97,11 +98,11 @@ function updateGameObjects() {
 }
 
 function render() {
-    // Clears whole canvas
-    ctx.clearRect(0, 0, cW, cH);
-    
     // Render
     if (gameRunning) {
+        // Clears whole canvas
+        ctx.clearRect(0, 0, cW, cH);
+        
         ground.draw();
 
         characters.forEach(char => {
@@ -111,13 +112,14 @@ function render() {
         projectiles.forEach(projectile => {
             projectile.draw();
         });
+        
+        window.requestAnimationFrame(render);
     }
 }
 
-function gameLoop() {
+function gameLogicLoop() {
     updateFromInput();
     updateGameObjects();
-    render();
 }
 
 function updateTime() { 
