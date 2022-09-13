@@ -1,19 +1,18 @@
 function updatePlayerPos() {
-    var spd = 3;
     if (upPressed) {
-        characters[0].Y -= spd;
+        hero.Y -= heroSpd;
     }
 
     if (downPressed) {
-        characters[0].Y += spd;
+        hero.Y += heroSpd;
     }
     
     if (leftPressed) {
-        characters[0].X -= spd;
+        hero.X -= heroSpd;
     }
     
     if (rightPressed) {
-        characters[0].X += spd;
+        hero.X += heroSpd;
     }
 }
 

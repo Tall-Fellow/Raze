@@ -26,6 +26,7 @@ var characters;
 var projectiles;
 var spawner;
 var hero;
+var heroSpd;
 var upPressed    = false;
 var downPressed  = false;
 var leftPressed  = false;
@@ -44,9 +45,10 @@ function startGame() {
     spawner     = new Spawner(canvas, ctx, ground, charClasses, projClasses, characters, projectiles);
 
     spawner.spawnChar(0, cW / 3, cH / 2);
-    hero = characters[0];
+    hero    = characters[0];
+    heroSpd = 3;
 
-    game = setInterval(draw, refreshRate);
+    game = setInterval(gameLoop, refreshRate);
     time = setInterval(updateTime, 1000);
 }
 
@@ -57,16 +59,14 @@ function resetGame() {
     ctx.clearRect(0, 0, cW, cH);
 }
 
-function draw() {
-    // Clears whole canvas
-    ctx.clearRect(0, 0, cW, cH);
-
+function updateGameObjects() {
     // Position updates
-    updatePlayerPos();
     ground.updatePosition();
+
     characters.forEach(char => {
         char.updatePosition();
     });
+
     projectiles.forEach(projectile => {
         projectile.updatePosition();
     });
@@ -94,20 +94,31 @@ function draw() {
             delOffset++;
         }
     }
+}
+
+function render() {
+    // Clears whole canvas
+    ctx.clearRect(0, 0, cW, cH);
     
     // Render
     if (gameRunning) {
         ground.draw();
+
         characters.forEach(char => {
             char.draw();
         });
+
         projectiles.forEach(projectile => {
             projectile.draw();
         });
     }
 }
 
-function scaleCoeff(maxW, maxH, imgW, imgH) { return Math.min(maxW/imgW, maxH/imgH); }
+function gameLoop() {
+    updateFromInput();
+    updateGameObjects();
+    render();
+}
 
 function updateTime() { 
     if (gameTime % lengthOfDay == 0) {
@@ -144,6 +155,8 @@ function playerDeath() {
     ctx.font = "18px monospace";
     ctx.fillText("Press enter to play again", cW / 2, cH / 2 + 35);
 }
+
+function scaleCoeff(maxW, maxH, imgW, imgH) { return Math.min(maxW/imgW, maxH/imgH); }
 
 // Starting screen
 ctx.fillStyle = "white";
