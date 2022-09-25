@@ -54,6 +54,11 @@ function resetGame() {
     ctx.clearRect(0, 0, cW, cH);
 }
 
+function playerDeath() {
+    resetGame();
+    renderDeathScreen();
+}
+
 function updateGameObjects() {
     // Position updates
     ground.updatePosition();
@@ -112,28 +117,27 @@ function render() {
 }
 
 function gameLogicLoop() {
-    updateFromInput();
-    updateGameObjects();
-}
-
-function updateTime() { 
-    if (gameTime % lengthOfDay == 0) {
-        ground.toggleTimeOfDay();
-        
-        //spawner.spawnChar(1, cW-90, ground.getFloor()); // Temp
-        //spawner.spawnChar(1, cW-80, ground.getFloor()); // Temp
-        //spawner.spawnChar(1, cW-70, ground.getFloor()); // Temp
-        //spawner.spawnChar(1, cW-60, ground.getFloor()); // Temp
-        spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
-
-        spawner.spawnProj(0, cW-50, cH/2); // Temp
-        spawner.spawnProj(0, cW-50, cH/3); // Temp
+    if (document.visibilityState == "visible") {
+        updateFromInput();
+        updateGameObjects();
     }
-
-    gameTime++; 
 }
 
-function playerDeath() {
-    resetGame();
-    renderDeathScreen();
+function updateTime() {
+    if (document.visibilityState == "visible") {
+        if (gameTime % lengthOfDay == 0) {
+            ground.toggleTimeOfDay();
+            
+            //spawner.spawnChar(1, cW-90, ground.getFloor()); // Temp
+            //spawner.spawnChar(1, cW-80, ground.getFloor()); // Temp
+            //spawner.spawnChar(1, cW-70, ground.getFloor()); // Temp
+            //spawner.spawnChar(1, cW-60, ground.getFloor()); // Temp
+            spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
+
+            spawner.spawnProj(0, cW-50, cH/2); // Temp
+            spawner.spawnProj(0, cW-50, cH/3); // Temp
+        }
+
+        gameTime++;
+    }
 }
