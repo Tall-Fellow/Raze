@@ -58,4 +58,12 @@ class Entity {
 
         return false;
     }
+
+    rotate(rad) {
+        let centerX = this.hitboxWidth / 2 + this.X;
+        let centerY = this.hitboxHeight / 2 + this.Y;
+        this.ctx.translate(centerX, centerY);
+        this.ctx.rotate(rad);
+        this.ctx.translate(-centerX, -centerY);
+    }
 }

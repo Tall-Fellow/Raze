@@ -14,6 +14,7 @@ var dayTime;
 var ground;
 var characters;
 var projectiles;
+var sprites;
 var spawner;
 var hero;
 var heroSpd;
@@ -25,6 +26,7 @@ var spacePressed = false;
 // End global vars
 
 // Initialization
+sprites = getSprites();
 appendCanvas();
 renderStartScreen();
 
@@ -36,7 +38,7 @@ function startGame() {
     ground      = new Ground(75, 2);
     characters  = new Array();
     projectiles = new Array();
-    spawner     = new Spawner(canvas, ctx, ground, charClasses, projClasses, characters, projectiles);
+    spawner     = new Spawner(canvas, ctx, ground, characters, projectiles, sprites);
 
     spawner.spawnChar(0, cW / 3, cH / 2);
     hero    = characters[0];
@@ -134,8 +136,8 @@ function updateTime() {
             //spawner.spawnChar(1, cW-60, ground.getFloor()); // Temp
             spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
 
-            spawner.spawnProj(0, cW-50, cH/2); // Temp
-            spawner.spawnProj(0, cW-50, cH/3); // Temp
+            //spawner.spawnProj(0, cW-50, cH/2); // Temp
+            //spawner.spawnProj(0, cW-50, cH/3); // Temp
         }
 
         gameTime++;
