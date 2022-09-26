@@ -79,7 +79,7 @@ function updateGameObjects() {
     });
 
     projectiles.forEach(projectile => {
-        if (projectile.collision(hero) && projectile.impact == false) {
+        if (projectile.collision(hero) && projectile.impact == false && projectile.team != hero.team) {
             if (hero.takeDamage(projectile)) {
                 playerDeath();
             }
@@ -136,8 +136,8 @@ function updateTime() {
             //spawner.spawnChar(1, cW-60, ground.getFloor()); // Temp
             spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
 
-            //spawner.spawnProj(0, cW-50, cH/2); // Temp
-            //spawner.spawnProj(0, cW-50, cH/3); // Temp
+            spawner.spawnProj(0, cW-50, cH/2); // Temp
+            spawner.spawnProj(1, 50, cH/3); // Temp
         }
 
         gameTime++;

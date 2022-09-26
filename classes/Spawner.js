@@ -5,17 +5,18 @@ class Spawner {
         this.ground      = ground
         this.charArr     = charArr;
         this.projArr     = projArr;
-        this.sprites     = sprites;
+        this.charSprites = sprites[0];
+        this.projSprites = sprites[1];
     }
     
     spawnChar(typeID, posX, posY) {
         switch (typeID) {
             case 0:
-                this.charArr.push(new Player(this.canvas, this.ctx, posX, posY, this.sprites[typeID], this.ground));
+                this.charArr.push(new Player(this.canvas, this.ctx, posX, posY, this.charSprites[typeID], this.ground));
                 break;
         
             case 1:
-                this.charArr.push(new Infantry(this.canvas, this.ctx, posX, posY, this.sprites[typeID], this.ground));
+                this.charArr.push(new Infantry(this.canvas, this.ctx, posX, posY, this.charSprites[typeID], this.ground));
                 break;
 
             default:
@@ -23,22 +24,18 @@ class Spawner {
         }
     }
 
-    spawnProj(classID, posX, posY) {
-        var proj = this.projClasses[classID];
-        this.projArr.push(new Projectile(
-            this.canvas, 
-            this.ctx, 
-            posX, 
-            posY, 
-            proj.sprites, 
-            this.ground, 
-            proj.team, 
-            proj.lifeTime, 
-            proj.damage, 
-            proj.speedX, 
-            proj.speedY, 
-            proj.scale, 
-            proj.animationSpeed
-        ));
+    spawnProj(typeID, posX, posY) {
+        switch (typeID) {
+            case 0:
+                this.projArr.push(new Arrow(this.canvas, this.ctx, posX, posY, this.projSprites[typeID], this.ground));
+                break;
+        
+            case 1:
+                this.projArr.push(new FireBreath(this.canvas, this.ctx, posX, posY, this.projSprites[typeID], this.ground));
+                break;
+
+            default:
+                break;
+        }
     }
 }

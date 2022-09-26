@@ -1,5 +1,7 @@
 function getSprites() {
+    // Characters
     var charSprites = new Array();
+
     var playerSprites = new Array();
     for (let i = 0; i < 10; i++) {
         var playerSprite = new Image();
@@ -16,5 +18,18 @@ function getSprites() {
     }
     charSprites.push(infSprites);
 
-    return charSprites;
+    // Projectiles
+    var projSprites = new Array();
+
+    var arrowSprites    = new Array();
+    arrowSprites[0]     = new Image();
+    arrowSprites[0].src = "media/arrow.png";
+    projSprites.push(arrowSprites);
+
+    var fireSprites    = new Array();
+    fireSprites[0]     = new Image();
+    fireSprites[0].src = "media/fire/fireBall1.png";
+    projSprites.push(fireSprites);
+
+    return [charSprites, projSprites];
 }
