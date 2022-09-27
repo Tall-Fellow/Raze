@@ -79,13 +79,15 @@ function updateGameObjects() {
     });
 
     projectiles.forEach(projectile => {
-        if (projectile.collision(hero) && projectile.impact == false && projectile.team != hero.team) {
-            if (hero.takeDamage(projectile)) {
-                playerDeath();
+        characters.forEach(char => {
+            if (projectile.collision(char) && projectile.impact == false && projectile.team != char.team) {
+                if (char.takeDamage(projectile) && char === hero) {
+                    playerDeath();
+                }
+                
+                projectile.setImpact();
             }
-
-            projectile.setImpact();
-        }
+        });
     });
 
     // Projectile management
