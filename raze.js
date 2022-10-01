@@ -61,6 +61,19 @@ function playerDeath() {
     renderDeathScreen();
 }
 
+function despawnProjs() {
+    for (let i = 0; i < projectiles.length; i++) {     
+        if (projectiles[i].updateLifeTime() || projectiles[i].isOutOfBounds()) {
+            projectiles.splice(i, 1);
+            i--;
+        }
+    }
+}
+
+function despawnChar() {
+
+}
+
 function updateGameObjects() {
     // Position updates
     ground.updatePosition();
@@ -79,25 +92,47 @@ function updateGameObjects() {
     });
 
     projectiles.forEach(projectile => {
-        characters.forEach(char => {
-            if (projectile.collision(char) && projectile.impact == false && projectile.team != char.team) {
-                if (char.takeDamage(projectile) && char === hero) {
-                    playerDeath();
+        for (let i = 0; i < characters.length; i++) {
+            if (projectile.collision(characters[i]) && projectile.impact == false && projectile.team != characters[i].team) {
+                if (characters[i].takeDamage(projectile)) {
+                    if (characters[i] === hero) {
+                        playerDeath();
+                    }
+
+                    else {
+                        characters.splice(i, 1);
+                        i--;
+                    }
                 }
-                
+
                 projectile.setImpact();
             }
-        });
+        }
+
+        // characters.forEach((char, i) => {
+        //     if (projectile.collision(char) && projectile.impact == false && projectile.team != char.team) {
+        //         if (char.takeDamage(projectile) && char === hero) {
+        //             playerDeath();
+        //         }
+
+        //         else {
+
+        //         }
+
+        //         projectile.setImpact();
+        //     }
+        // });
     });
 
     // Projectile management
-    var delOffset = 0;
-    for (let i = 0; i < projectiles.length; i++) {
-        if (projectiles[i].updateLifeTime() || projectiles[i].isOutOfBounds()) {
-            projectiles.splice(i - delOffset);
-            delOffset++;
-        }
-    }
+    despawnProjs();
+    // var delOffset = 0;
+    // for (let i = 0; i < projectiles.length; i++) {
+    //     if (projectiles[i].updateLifeTime() || projectiles[i].isOutOfBounds()) {
+    //         projectiles.splice(i - delOffset);
+    //         delOffset++;
+    //     }
+    // }
 }
 
 function render() {
