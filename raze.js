@@ -70,27 +70,7 @@ function despawnProjs() {
     }
 }
 
-function despawnChar() {
-
-}
-
-function updateGameObjects() {
-    // Position updates
-    ground.updatePosition();
-
-    characters.forEach(char => {
-        char.updatePosition();
-    });
-
-    projectiles.forEach(projectile => {
-        projectile.updatePosition();
-    });
-
-    // Collision checks
-    characters.forEach(char => {
-        char.checkBounds();
-    });
-
+function checkProjsHit() {
     projectiles.forEach(projectile => {
         for (let i = 0; i < characters.length; i++) {
             if (projectile.collision(characters[i]) && projectile.impact == false && projectile.team != characters[i].team) {
@@ -108,31 +88,30 @@ function updateGameObjects() {
                 projectile.setImpact();
             }
         }
+    });
+}
 
-        // characters.forEach((char, i) => {
-        //     if (projectile.collision(char) && projectile.impact == false && projectile.team != char.team) {
-        //         if (char.takeDamage(projectile) && char === hero) {
-        //             playerDeath();
-        //         }
+function updateGameObjects() {
+    // Position & Action updates
+    ground.updatePosition();
 
-        //         else {
+    characters.forEach(char => {
+        char.updatePosition();
+        char.action();
+    });
 
-        //         }
+    projectiles.forEach(projectile => {
+        projectile.updatePosition();
+    });
 
-        //         projectile.setImpact();
-        //     }
-        // });
+    // Collision checks
+    characters.forEach(char => {
+        char.checkBounds();
     });
 
     // Projectile management
+    checkProjsHit();
     despawnProjs();
-    // var delOffset = 0;
-    // for (let i = 0; i < projectiles.length; i++) {
-    //     if (projectiles[i].updateLifeTime() || projectiles[i].isOutOfBounds()) {
-    //         projectiles.splice(i - delOffset);
-    //         delOffset++;
-    //     }
-    // }
 }
 
 function render() {
@@ -157,7 +136,6 @@ function render() {
 
 function gameLogicLoop() {
     if (document.visibilityState == "visible") {
-        updateFromInput();
         updateGameObjects();
     }
 }
@@ -172,9 +150,6 @@ function updateTime() {
             //spawner.spawnChar(1, cW-70, ground.getFloor()); // Temp
             //spawner.spawnChar(1, cW-60, ground.getFloor()); // Temp
             spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
-
-            spawner.spawnProj(0, cW-50, cH/2); // Temp
-            spawner.spawnProj(1, 50, cH/3); // Temp
         }
 
         gameTime++;

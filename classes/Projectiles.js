@@ -9,7 +9,7 @@ class Projectile extends Entity {
         if (this.onGround) { 
             this.X += this.speedX;
             this.X -= this.ground.scrollSpeed;
-            this.Y = this.ground.getFloor();
+            this.Y = this.ground.getFloor() - this.hitboxHeight;
         };
     }
 

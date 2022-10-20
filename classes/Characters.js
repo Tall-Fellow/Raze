@@ -3,6 +3,7 @@ class Character extends Entity {
         super(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, scale, animationSpeed);
         this.HP        = HP;
         this.hpBarSize = HP;
+        this.clock     = 0;
     }
 
     // Return true if damage taken kills character
@@ -32,6 +33,10 @@ class Character extends Entity {
         if (this.Y < 0 || this.Y + this.hitboxHeight > this.ground.getFloor()) {
             this.Y = this.Y < 0? 0 : this.ground.getFloor() - this.hitboxHeight;
         }
+    }
+
+    action() {
+        this.clock++;
     }
 
     draw() {

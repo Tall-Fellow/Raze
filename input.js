@@ -1,7 +1,3 @@
-function updateFromInput() {
-    updatePlayerPos();
-}
-
 function keyDownHandler(e) {
     switch (e.code) {
         case "Enter":

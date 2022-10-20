@@ -2,6 +2,9 @@ class Player extends Character {
     constructor(canvas, ctx, x, y, sprites, ground, team = 1, lifeTime = 0, HP = 100, damage = 30, speedX = 0, speedY = 0, scale = 0.4, animationSpeed = 80) {
         super(canvas, ctx, x, y, sprites, ground, team, lifeTime, HP, damage, speedX, speedY, scale, animationSpeed);
 
+        this.breath = 100;
+        this.breathCountdown = 0;
+
         // Health & Breath bar setup
         this.offset = cW - (this.hpBarSize * 2) - (cW * 0.05);
         this.hpGradient = ctx.createLinearGradient(this.offset, 0, this.offset + this.hpBarSize * 2, 0);
@@ -25,6 +28,38 @@ class Player extends Character {
         }
     }
 
+    action() {
+        super.action();
+        if (spacePressed && this.breath > 0) {
+            spawner.spawnProj(1, this.X, this.Y);  
+            this.breath -= 1.5;
+
+            this.breathCountdown = this.clock + (1500 / refreshRate); // ms
+        }
+
+        else if (!spacePressed && this.breath < 100 && this.clock >= this.breathCountdown) {
+            this.breath++;
+        }
+    }
+
+    updatePosition() {
+        if (upPressed) {
+            hero.Y -= heroSpd;
+        }
+    
+        if (downPressed) {
+            hero.Y += heroSpd;
+        }
+        
+        if (leftPressed) {
+            hero.X -= heroSpd;
+        }
+        
+        if (rightPressed) {
+            hero.X += heroSpd;
+        }
+    }
+
     draw() {
         super.draw();
         
@@ -32,29 +67,11 @@ class Player extends Character {
         this.ctx.fillStyle = this.hpGradient;
         this.ctx.fillRect(this.offset, cH * 0.05, this.HP*2, 20);
         this.ctx.fillStyle = this.breathGradient;
-        this.ctx.fillRect(this.offset, cH * 0.05 + 30, this.HP*2, 20);
+        this.ctx.fillRect(this.offset, cH * 0.05 + 30, this.breath*2, 20);
 
         this.ctx.strokeStyle = "gold";
         this.ctx.strokeRect(this.offset, cH * 0.05, this.hpBarSize*2, 20);
         this.ctx.strokeRect(this.offset, cH * 0.05 + 30, this.hpBarSize*2, 20);
-    }
-}
-
-function updatePlayerPos() {
-    if (upPressed) {
-        hero.Y -= heroSpd;
-    }
-
-    if (downPressed) {
-        hero.Y += heroSpd;
-    }
-    
-    if (leftPressed) {
-        hero.X -= heroSpd;
-    }
-    
-    if (rightPressed) {
-        hero.X += heroSpd;
     }
 }
 
