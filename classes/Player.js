@@ -31,7 +31,7 @@ class Player extends Character {
     action() {
         super.action();
         if (spacePressed && this.breath > 0) {
-            spawner.spawnProj(1, this.X, this.Y);  
+            spawner.spawnProj(1, this.X + this.hitboxWidth - 20, this.Y + 20);  
             this.breath -= 1.5;
 
             this.breathCountdown = this.clock + (1500 / refreshRate); // ms
@@ -74,31 +74,3 @@ class Player extends Character {
         this.ctx.strokeRect(this.offset, cH * 0.05 + 30, this.hpBarSize*2, 20);
     }
 }
-
-// if (spacePressed && this.breath > 0) {
-//     projectiles.push(
-//         new Fire(
-//             canvas, 
-//             ctx, 
-//             this.X + this.hitboxWidth - 40, 
-//             this.Y + this.hitboxHeight - 50, 
-//             fireSprites, 
-//             ground, 
-//             fireLifeTime, 
-//             20, 
-//             -4, 
-//             -4, 
-//             0.12
-//         )
-//     );
-//     this.breath--;
-// }
-
-// else if (!spacePressed && this.breath < 100) {
-//     this.breath++;
-// }
-
-// drawStats() {
-//     document.getElementById("health").innerText = "HP: " + this.HP;
-//     document.getElementById("breath").innerText = "Breath: " + this.breath;
-// }

@@ -150,6 +150,7 @@ function updateTime() {
             //spawner.spawnChar(1, cW-70, ground.getFloor()); // Temp
             //spawner.spawnChar(1, cW-60, ground.getFloor()); // Temp
             spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
+            //spawner.spawnProj(0, 600, 600);
         }
 
         gameTime++;

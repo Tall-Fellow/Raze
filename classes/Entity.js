@@ -4,6 +4,7 @@ class Entity {
         this.ctx      = ctx,
         this.X        = x;
         this.Y        = y;
+        this.rotation = 0;
         this.sprites  = sprites;
         this.ground   = ground;
         this.team     = team;
@@ -16,14 +17,23 @@ class Entity {
         this.currentSprite = 0;
         setInterval(() => {
             this.currentSprite = (this.currentSprite > sprites.length - 2)? 0 : this.currentSprite + 1;
-        
             this.hitboxWidth  = this.sprites[this.currentSprite].width * this.scale;
             this.hitboxHeight = this.sprites[this.currentSprite].height * this.scale;
         }, animationSpeed);
     }
 
     draw() {
-        this.ctx.drawImage(this.sprites[this.currentSprite], this.X, this.Y, this.hitboxWidth, this.hitboxHeight);
+        if (this.rotation != 0) {
+            this.ctx.save();
+            this.ctx.translate(this.X + (this.hitboxWidth / 2), this.Y + (this.hitboxHeight / 2));
+            this.ctx.rotate(this.rotation * Math.PI / 180);
+            this.ctx.drawImage(this.sprites[this.currentSprite], 0, 0, this.hitboxWidth, this.hitboxHeight);
+            this.ctx.restore();
+        }
+
+        else {
+            this.ctx.drawImage(this.sprites[this.currentSprite], this.X, this.Y, this.hitboxWidth, this.hitboxHeight);
+        }
     }
 
     updatePosition() {
@@ -57,13 +67,5 @@ class Entity {
         }
 
         return false;
-    }
-
-    rotate(rad) {
-        let centerX = this.hitboxWidth / 2 + this.X;
-        let centerY = this.hitboxHeight / 2 + this.Y;
-        this.ctx.translate(centerX, centerY);
-        this.ctx.rotate(rad);
-        this.ctx.translate(-centerX, -centerY);
     }
 }
