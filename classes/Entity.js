@@ -1,10 +1,9 @@
 class Entity {
-    constructor(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, scale, animationSpeed) {
+    constructor(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed) {
         this.canvas   = canvas,
         this.ctx      = ctx,
         this.X        = x;
         this.Y        = y;
-        this.rotation = 0;
         this.sprites  = sprites;
         this.ground   = ground;
         this.team     = team;
@@ -12,6 +11,10 @@ class Entity {
         this.damage   = damage;
         this.speedX   = speedX;
         this.speedY   = speedY;
+        this.deltaSpeedX   = deltaSpeedX, 
+        this.deltaSpeedY   = deltaSpeedY, 
+        this.rotation      = rotation, 
+        this.deltaRotation = deltaRotation, 
         this.scale    = scale;
         this.onGround = false;
         this.currentSprite = 0;
@@ -37,6 +40,9 @@ class Entity {
     }
 
     updatePosition() {
+        this.rotation -= this.deltaRotation;
+        this.speedX -= this.deltaSpeedX;
+        this.speedY -= this.deltaSpeedY;
         this.X -= this.speedX;
         this.Y -= this.speedY;
     }
@@ -47,13 +53,14 @@ class Entity {
     }
 
     checkBounds() {
-        // Y-axis
-        if (this.Y < 0 || this.Y + this.hitboxHeight > this.ground.getFloor()) {
-            this.Y = this.Y < 0? 0 : this.ground.getFloor() - this.hitboxHeight;
-        }
         // X-axis
         if (this.X < 0 || this.X + this.hitboxWidth > cW) {
             this.X = this.X < 0? 0 : cW - this.hitboxWidth;
+        }
+        
+        // Y-axis
+        if (this.Y < 0 || this.Y + this.hitboxHeight > this.ground.getFloor()) {
+            this.Y = this.Y < 0? 0 : this.ground.getFloor() - this.hitboxHeight;
         }
     }
 

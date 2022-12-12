@@ -1,11 +1,12 @@
 class Projectile extends Entity {
-    constructor(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, scale, animationSpeed) {
-        super(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, scale, animationSpeed);
+    constructor(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed) {
+        super(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
         this.impact = false;
     }
 
     updatePosition() {
         super.updatePosition();
+
         if (this.onGround) { 
             this.X += this.speedX;
             this.X -= this.ground.scrollSpeed;
@@ -33,5 +34,9 @@ class Projectile extends Entity {
         }
 
         return false;
+    }
+
+    arc(X) {
+        // Intentionally left empty
     }
 }
