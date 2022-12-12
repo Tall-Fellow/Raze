@@ -57,22 +57,10 @@ class Entity {
         if (this.X < 0 || this.X + this.hitboxWidth > cW) {
             this.X = this.X < 0? 0 : cW - this.hitboxWidth;
         }
-        
+
         // Y-axis
         if (this.Y < 0 || this.Y + this.hitboxHeight > this.ground.getFloor()) {
             this.Y = this.Y < 0? 0 : this.ground.getFloor() - this.hitboxHeight;
         }
-    }
-
-    isOutOfBounds() {
-        if (
-            this.Y < 0 ||
-            this.X < -this.hitboxWidth ||
-            this.X > cW
-        ) {
-            return true;
-        }
-
-        return false;
     }
 }

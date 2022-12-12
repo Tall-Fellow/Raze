@@ -14,6 +14,18 @@ class Projectile extends Entity {
         };
     }
 
+    isOutOfBounds() {
+        if (
+            this.Y < 0 ||
+            this.X < (-2 * this.hitboxWidth) ||
+            this.X > cW
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     setImpact() {
         this.impact = true;
     }
@@ -34,9 +46,5 @@ class Projectile extends Entity {
         }
 
         return false;
-    }
-
-    arc(X) {
-        // Intentionally left empty
     }
 }
