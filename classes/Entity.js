@@ -26,7 +26,7 @@ class Entity {
     }
 
     draw() {
-        if (this.rotation != 0) {
+        if (this.deltaRotation != 0) {
             this.ctx.save();
             this.ctx.translate(this.X + (this.hitboxWidth / 2), this.Y + (this.hitboxHeight / 2));
             this.ctx.rotate(this.rotation * Math.PI / 180);
