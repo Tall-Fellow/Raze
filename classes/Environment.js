@@ -1,40 +1,22 @@
 class Environment {
-    constructor(heightAdjuster, scrollSpeed) {
-        var self             = this;
-        var moonSprite       = new Array();
-        this.heightAdjuster  = heightAdjuster;
-        this.scrollSpeed     = scrollSpeed;
-        this.scrollPos1      = 0;
-        this.scrollPos2      = 0;
-        this.trans           = false;
-        this.transAcc        = 0.002;
-        this.transState      = 1; // Goes from 0 to 1 and sets opacity
-        this.dayBgImg        = new Image();
-        this.nightBgImg      = new Image();
-        this.dayFloorImg     = new Image();
-        this.nightFloorImg   = new Image();
-        this.moonImg         = new Image();
-        this.moon            = new Entity(canvas, ctx, 147, 30, moonSprite, this, 0, 0, 0, -0.02, 0.05, 0.8, 80);
-        moonSprite.push(this.moonImg);
-        
-        this.dayFloorImg.onload = function() {
-            self.scale               = scaleCoeff(cW, cH, self.dayFloorImg.width, self.dayFloorImg.height);
-            self.dayFloorImg.height  = self.dayFloorImg.height * self.scale;
-            self.dayFloorImg.width   = self.dayFloorImg.width * self.scale;
-            self.scrollPos2          = self.dayFloorImg.width;
-            self.height              = cH - self.dayFloorImg.height;
-        }
-        this.nightFloorImg.onload = function() {
-            self.scale                = scaleCoeff(cW, cH, self.nightFloorImg.width, self.nightFloorImg.height);
-            self.nightFloorImg.height = self.nightFloorImg.height * self.scale;
-            self.nightFloorImg.width  = self.nightFloorImg.width * self.scale;
-        }
-
-        this.dayFloorImg.src   = "media/background/dayGround.png";
-        this.nightFloorImg.src = "media/background/nightGround.png";
-        this.dayBgImg.src      = "media/background/dayBG.jpg";
-        this.nightBgImg.src    = "media/background/nightBG.jpg";
-        this.moonImg.src       = "media/background/nightMoon.png";
+    constructor(sprites, heightAdjuster = 75, scrollSpeed = 2) {
+        this.heightAdjuster = heightAdjuster;
+        this.scrollSpeed    = scrollSpeed;
+        this.trans          = false;
+        this.transAcc       = 0.002;
+        this.transState     = 1; // Goes from 0 to 1 and sets opacity
+        this.dayBgImg       = sprites[0][0];
+        this.nightBgImg     = sprites[0][1];
+        this.dayFloorImg    = sprites[1][0];
+        this.nightFloorImg  = sprites[1][1];
+        this.scale = scaleCoeff(cW, cH, this.dayFloorImg.width, this.dayFloorImg.height);
+        this.dayFloorImg.height   = this.dayFloorImg.height * this.scale;
+        this.dayFloorImg.width    = this.dayFloorImg.width * this.scale;
+        this.nightFloorImg.height = this.nightFloorImg.height * this.scale;
+        this.nightFloorImg.width  = this.nightFloorImg.width * this.scale;
+        this.scrollPos1           = 0;
+        this.scrollPos2           = this.dayFloorImg.width;
+        this.height               = cH - this.dayFloorImg.height;
     }
 
     draw() {
@@ -47,7 +29,6 @@ class Environment {
             // Width & Height
             cW, cH
         );
-        this.moon.draw();
         // Night - BG End
 
         // Day - BG Start
@@ -112,10 +93,8 @@ class Environment {
     }
 
     updatePosition() {
-        this.scrollPos1 -= this.scrollSpeed
-        this.scrollPos2 -= this.scrollSpeed
-        this.moon.X -= this.moon.speedX;
-        this.moon.Y -= this.moon.speedY;
+        this.scrollPos1 -= this.scrollSpeed;
+        this.scrollPos2 -= this.scrollSpeed;
         this._checkRepeat();
 
         // Day/Night transition
@@ -125,13 +104,13 @@ class Environment {
             if (this.transState <= 0) {
                 this.transState = 0;
                 this.trans      = false;
-                this.transAcc  *= -1;
+                this.transAcc *= -1;
             }
             
             else if (this.transState >= 1) {
                 this.transState = 1;
                 this.trans      = false;
-                this.transAcc  *= -1;
+                this.transAcc *= -1;
             }
         }
     };
@@ -148,8 +127,5 @@ class Environment {
         if (this.scrollPos2 <= -this.dayFloorImg.width) {
             this.scrollPos2 = this.dayFloorImg.width;
         }
-
-        if (this.moon.X >= 157 || this.moon.X <= 137) { this.moon.speedX *= -1; }
-        if (this.moon.Y >= 40 || this.moon.Y <= 20) { this.moon.speedY *= -1; }
     };
 }

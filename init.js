@@ -1,4 +1,21 @@
 function getSprites() {
+    // Environment
+    var envSprites = new Array();
+
+    var backgroundSprites    = new Array();
+    backgroundSprites[0]     = new Image();
+    backgroundSprites[0].src = "media/environment/dayBG.jpg";
+    backgroundSprites[1]     = new Image();
+    backgroundSprites[1].src = "media/environment/nightBG.jpg";
+    envSprites.push(backgroundSprites);
+
+    var groundSprites    = new Array();
+    groundSprites[0]     = new Image();
+    groundSprites[0].src = "media/environment/dayGround.png";
+    groundSprites[1]     = new Image();
+    groundSprites[1].src = "media/environment/nightGround.png";
+    envSprites.push(groundSprites);
+
     // Characters
     var charSprites = new Array();
 
@@ -36,8 +53,8 @@ function getSprites() {
 
     var moonSprites    = new Array();
     moonSprites[0]     = new Image();
-    moonSprites[0].src = "media/background/nightMoon.png";
+    moonSprites[0].src = "media/environment/nightMoon.png";
     entSprites.push(moonSprites);
 
-    return [charSprites, projSprites, entSprites];
+    return [charSprites, projSprites, entSprites, envSprites];
 }
