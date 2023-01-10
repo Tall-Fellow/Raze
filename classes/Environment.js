@@ -1,5 +1,6 @@
 class Environment {
-    constructor(sprites, heightAdjuster = 75, scrollSpeed = 2) {
+    constructor(ctx, sprites, heightAdjuster = 75, scrollSpeed = 2) {
+        this.ctx                  = ctx;
         this.heightAdjuster       = heightAdjuster;
         this.scrollSpeed          = scrollSpeed;
         this.trans                = false;
@@ -22,7 +23,7 @@ class Environment {
     draw() {
         // BG Start
         // Night
-        ctx.drawImage(
+        this.ctx.drawImage(
             // Src img render portion settings
             this.nightBgImg, 0, 0, this.nightBgImg.width, this.nightBgImg.height, 
             // X & Y
@@ -32,8 +33,8 @@ class Environment {
         );
 
         // Day
-        ctx.globalAlpha = this.transState;
-        ctx.drawImage(
+        this.ctx.globalAlpha = this.transState;
+        this.ctx.drawImage(
             // Src img render portion settings
             this.dayBgImg, 0, 0, this.dayBgImg.width, this.dayBgImg.height, 
             // X & Y
@@ -41,12 +42,12 @@ class Environment {
             // Width & Height
             cW, cH
         );        
-        ctx.globalAlpha = 1;
+        this.ctx.globalAlpha = 1;
         // BG End
 
         // Floor Start
         // Night
-        ctx.drawImage(
+        this.ctx.drawImage(
             // Src img render portion settings
             this.nightFloorImg, 0, 0, this.nightFloorImg.width / this.scale, this.nightFloorImg.height / this.scale, 
             // X & Y
@@ -55,7 +56,7 @@ class Environment {
             this.nightFloorImg.width, this.nightFloorImg.height
         );
         
-        ctx.drawImage(
+        this.ctx.drawImage(
             // Src img render portion settings
             this.nightFloorImg, 0, 0, this.nightFloorImg.width / this.scale, this.nightFloorImg.height / this.scale, 
             // X & Y
@@ -65,8 +66,8 @@ class Environment {
         );
 
         // Day
-        ctx.globalAlpha = this.transState;
-        ctx.drawImage(
+        this.ctx.globalAlpha = this.transState;
+        this.ctx.drawImage(
             // Src img render portion settings
             this.dayFloorImg, 0, 0, this.dayFloorImg.width / this.scale, this.dayFloorImg.height / this.scale, 
             // X & Y
@@ -75,7 +76,7 @@ class Environment {
             this.dayFloorImg.width, this.dayFloorImg.height
         );
         
-        ctx.drawImage(
+        this.ctx.drawImage(
             // Src img render portion settings
             this.dayFloorImg, 0, 0, this.dayFloorImg.width / this.scale, this.dayFloorImg.height / this.scale, 
             // X & Y
@@ -83,7 +84,7 @@ class Environment {
             // Width & Height
             this.dayFloorImg.width, this.dayFloorImg.height
         );
-        ctx.globalAlpha = 1;
+        this.ctx.globalAlpha = 1;
         // Floor End
     };
 
@@ -102,12 +103,14 @@ class Environment {
         if (this.trans) {
             this.transState -= this.transAcc;
 
+            // Night has been reached
             if (this.transState <= 0) {
                 this.transState = 0;
                 this.trans      = false;
                 this.transAcc *= -1;
             }
             
+            // Day has been reached
             else if (this.transState >= 1) {
                 this.transState = 1;
                 this.trans      = false;
@@ -118,6 +121,10 @@ class Environment {
 
     getFloor() {
         return this.floorHeight + this.heightAdjuster;
+    }
+
+    getTransitionState() {
+        return this.transState;
     }
 
     _repeatFloor() {

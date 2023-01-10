@@ -37,7 +37,7 @@ function startGame() {
     gameTime    = 1;
     dayTime     = true;
 
-    environment = new Environment(sprites[3]);
+    environment = new Environment(ctx, sprites[3]);
     entities    = new Array();
     characters  = new Array();
     projectiles = new Array();

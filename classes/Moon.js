@@ -24,6 +24,12 @@ class Moon extends Entity {
         this.bounceAreaRadius = 10;
     }
 
+    draw() {
+        this.ctx.globalAlpha = 1 - this.environment.getTransitionState();
+        super.draw();
+        this.ctx.globalAlpha = 1;
+    }
+
     updatePosition() {
         this.X -= this.speedX;
         this.Y -= this.speedY;
