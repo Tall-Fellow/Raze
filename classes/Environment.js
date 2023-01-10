@@ -1,4 +1,4 @@
-class Ground {
+class Environment {
     constructor(heightAdjuster, scrollSpeed) {
         var self             = this;
         var moonSprite       = new Array();

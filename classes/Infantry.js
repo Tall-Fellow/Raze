@@ -4,7 +4,7 @@ class Infantry extends Character {
         x, 
         y, 
         sprites, 
-        ground, 
+        environment, 
         team           = 0, 
         lifeTime       = 0, 
         HP             = 100, 
@@ -18,7 +18,7 @@ class Infantry extends Character {
         scale          = 0.35, 
         animationSpeed = 80
     ) {
-        super(canvas, ctx, x, y, sprites, ground, team, lifeTime, HP, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
+        super(canvas, ctx, x, y, sprites, environment, team, lifeTime, HP, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
     }
 
     action() {

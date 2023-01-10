@@ -5,7 +5,7 @@ class Player extends Character {
         x, 
         y, 
         sprites, 
-        ground, 
+        environment, 
         team           = 1, 
         lifeTime       = 0, 
         HP             = 100, 
@@ -19,7 +19,7 @@ class Player extends Character {
         scale          = 0.4, 
         animationSpeed = 80
     ) {
-        super(canvas, ctx, x, y, sprites, ground, team, lifeTime, HP, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
+        super(canvas, ctx, x, y, sprites, environment, team, lifeTime, HP, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
 
         this.breath = 100;
         this.breathCountdown = 0;
@@ -42,8 +42,8 @@ class Player extends Character {
         }
 
         // Y-axis
-        if (this.Y < 0 || this.Y + this.hitboxHeight > this.ground.getFloor()) {
-            this.Y = this.Y < 0? 0 : this.ground.getFloor() - this.hitboxHeight;
+        if (this.Y < 0 || this.Y + this.hitboxHeight > this.environment.getFloor()) {
+            this.Y = this.Y < 0? 0 : this.environment.getFloor() - this.hitboxHeight;
         }
     }
 

@@ -5,7 +5,7 @@ class Arrow extends Projectile {
         x, 
         y, 
         sprites, 
-        ground, 
+        environment, 
         team           = 0, 
         lifeTime       = 200, 
         damage         = 10, 
@@ -18,6 +18,6 @@ class Arrow extends Projectile {
         scale          = 0.4, 
         animationSpeed = 80
     ) {
-        super(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
+        super(canvas, ctx, x, y, sprites, environment, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
     }
 }

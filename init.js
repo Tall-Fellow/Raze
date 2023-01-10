@@ -31,5 +31,13 @@ function getSprites() {
     fireSprites[0].src = "media/fire/fireBall1.png";
     projSprites.push(fireSprites);
 
-    return [charSprites, projSprites];
+    // Entities
+    var entSprites = new Array();
+
+    var moonSprites    = new Array();
+    moonSprites[0]     = new Image();
+    moonSprites[0].src = "media/background/nightMoon.png";
+    entSprites.push(moonSprites);
+
+    return [charSprites, projSprites, entSprites];
 }

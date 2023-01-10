@@ -5,7 +5,7 @@ class FireBreath extends Projectile {
         x, 
         y, 
         sprites, 
-        ground, 
+        environment, 
         team           = 1, 
         lifeTime       = 3000, 
         damage         = 4, 
@@ -18,6 +18,6 @@ class FireBreath extends Projectile {
         scale          = 0.12, 
         animationSpeed = 80
     ) {
-        super(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
+        super(canvas, ctx, x, y, sprites, environment, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
     }
 }

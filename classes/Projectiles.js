@@ -1,6 +1,6 @@
 class Projectile extends Entity {
-    constructor(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed) {
-        super(canvas, ctx, x, y, sprites, ground, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
+    constructor(canvas, ctx, x, y, sprites, environment, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed) {
+        super(canvas, ctx, x, y, sprites, environment, team, lifeTime, damage, speedX, speedY, deltaSpeedX, deltaSpeedY, rotation, deltaRotation, scale, animationSpeed);
         this.impact = false;
     }
 
@@ -9,8 +9,8 @@ class Projectile extends Entity {
 
         if (this.onGround) { 
             this.X += this.speedX;
-            this.X -= this.ground.scrollSpeed;
-            this.Y = this.ground.getFloor() - this.hitboxHeight;
+            this.X -= this.environment.scrollSpeed;
+            this.Y = this.environment.getFloor() - this.hitboxHeight;
         };
     }
 
@@ -32,7 +32,7 @@ class Projectile extends Entity {
 
     collision(char) {
         // Check ground collision first
-        if (this.Y + this.hitboxHeight > this.ground.getFloor()) {
+        if (this.Y + this.hitboxHeight > this.environment.getFloor()) {
             this.onGround = true;
         }
 

@@ -4,7 +4,8 @@ var gameRunning;
 var game; // Holds the game loop
 var time;
 var dayTime;
-var ground;
+var environment;
+var entities;
 var characters;
 var projectiles;
 var sprites;
@@ -29,19 +30,22 @@ var spacePressed = false;
 sprites = getSprites();
 appendCanvas();
 renderStartScreen();
+// End initialization
 
 function startGame() {
     gameRunning = true;
     gameTime    = 1;
     dayTime     = true;
 
-    ground      = new Ground(75, 2);
+    environment = new Environment(75, 2);
+    entities    = new Array();
     characters  = new Array();
     projectiles = new Array();
-    spawner     = new Spawner(canvas, ctx, ground, characters, projectiles, sprites);
+    spawner     = new Spawner(canvas, ctx, environment, entities, characters, projectiles, sprites);
 
+    spawner.spawnEnt(0, 147, 30);
     spawner.spawnChar(0, cW / 3, cH / 2); // Spawns the hero character
-    hero    = characters[0];
+    hero = characters[0];
 
     game = setInterval(gameLogicLoop, 1000/refreshRate); // Start the main game loop at desired fps
     time = setInterval(updateTime, 1000); // Start the game clock
@@ -97,7 +101,11 @@ function render() {
     if (gameRunning) {
         ctx.clearRect(0, 0, cW, cH); // Clears whole canvas
         
-        ground.draw();
+        environment.draw();
+
+        entities.forEach(entity => {
+            entity.draw();
+        });
 
         characters.forEach(char => {
             char.draw();
@@ -115,7 +123,11 @@ function render() {
 function gameLogicLoop() {
     if (document.visibilityState == "visible") {
         // Position & Action updates
-        ground.updatePosition();
+        environment.updatePosition();
+
+        entities.forEach(entity => {
+            entity.updatePosition();
+        });
 
         characters.forEach(char => {
             char.updatePosition();
@@ -140,13 +152,13 @@ function gameLogicLoop() {
 function updateTime() {
     if (document.visibilityState == "visible") {
         if (gameTime % lengthOfDay == 0) {
-            ground.toggleTimeOfDay();
+            environment.toggleTimeOfDay();
             
-            //spawner.spawnChar(1, cW-90, ground.getFloor()); // Temp
-            //spawner.spawnChar(1, cW-80, ground.getFloor()); // Temp
-            //spawner.spawnChar(1, cW-70, ground.getFloor()); // Temp
-            //spawner.spawnChar(1, cW-60, ground.getFloor()); // Temp
-            spawner.spawnChar(1, cW-50, ground.getFloor()); // Temp
+            //spawner.spawnChar(1, cW-90, environment.getFloor()); // Temp
+            //spawner.spawnChar(1, cW-80, environment.getFloor()); // Temp
+            //spawner.spawnChar(1, cW-70, environment.getFloor()); // Temp
+            //spawner.spawnChar(1, cW-60, environment.getFloor()); // Temp
+            spawner.spawnChar(1, cW-50, environment.getFloor()); // Temp
             //spawner.spawnProj(0, 600, 600);
         }
 
