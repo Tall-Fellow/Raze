@@ -1,26 +1,27 @@
 class Environment {
     constructor(sprites, heightAdjuster = 75, scrollSpeed = 2) {
-        this.heightAdjuster = heightAdjuster;
-        this.scrollSpeed    = scrollSpeed;
-        this.trans          = false;
-        this.transAcc       = 0.002;
-        this.transState     = 1; // Goes from 0 to 1 and sets opacity
-        this.dayBgImg       = sprites[0][0];
-        this.nightBgImg     = sprites[0][1];
-        this.dayFloorImg    = sprites[1][0];
-        this.nightFloorImg  = sprites[1][1];
-        this.scale = scaleCoeff(cW, cH, this.dayFloorImg.width, this.dayFloorImg.height);
+        this.heightAdjuster       = heightAdjuster;
+        this.scrollSpeed          = scrollSpeed;
+        this.trans                = false;
+        this.transAcc             = 0.002;
+        this.transState           = 1; // Goes from 0 to 1 and sets opacity
+        this.dayBgImg             = sprites[0][0];
+        this.nightBgImg           = sprites[0][1];
+        this.dayFloorImg          = sprites[1][0];
+        this.nightFloorImg        = sprites[1][1];
+        this.scale                = scaleCoeff(cW, cH, this.dayFloorImg.width, this.dayFloorImg.height);
         this.dayFloorImg.height   = this.dayFloorImg.height * this.scale;
         this.dayFloorImg.width    = this.dayFloorImg.width * this.scale;
         this.nightFloorImg.height = this.nightFloorImg.height * this.scale;
         this.nightFloorImg.width  = this.nightFloorImg.width * this.scale;
         this.scrollPos1           = 0;
-        this.scrollPos2           = this.dayFloorImg.width;
-        this.height               = cH - this.dayFloorImg.height;
+        this.scrollPos2           = cW;
+        this.floorHeight          = cH - this.dayFloorImg.height;
     }
 
     draw() {
-        // Night - BG Start
+        // BG Start
+        // Night
         ctx.drawImage(
             // Src img render portion settings
             this.nightBgImg, 0, 0, this.nightBgImg.width, this.nightBgImg.height, 
@@ -29,9 +30,8 @@ class Environment {
             // Width & Height
             cW, cH
         );
-        // Night - BG End
 
-        // Day - BG Start
+        // Day
         ctx.globalAlpha = this.transState;
         ctx.drawImage(
             // Src img render portion settings
@@ -42,14 +42,15 @@ class Environment {
             cW, cH
         );        
         ctx.globalAlpha = 1;
-        // Day - BG End
+        // BG End
 
-        // Night - Floor Start
+        // Floor Start
+        // Night
         ctx.drawImage(
             // Src img render portion settings
             this.nightFloorImg, 0, 0, this.nightFloorImg.width / this.scale, this.nightFloorImg.height / this.scale, 
             // X & Y
-            this.scrollPos1, this.height, 
+            this.scrollPos1, this.floorHeight, 
             // Width & Height
             this.nightFloorImg.width, this.nightFloorImg.height
         );
@@ -58,19 +59,18 @@ class Environment {
             // Src img render portion settings
             this.nightFloorImg, 0, 0, this.nightFloorImg.width / this.scale, this.nightFloorImg.height / this.scale, 
             // X & Y
-            this.scrollPos2, this.height, 
+            this.scrollPos2, this.floorHeight, 
             // Width & Height
             this.nightFloorImg.width, this.nightFloorImg.height
         );
-        // Night - Floor End
 
-        // Day - Floor Start
+        // Day
         ctx.globalAlpha = this.transState;
         ctx.drawImage(
             // Src img render portion settings
             this.dayFloorImg, 0, 0, this.dayFloorImg.width / this.scale, this.dayFloorImg.height / this.scale, 
             // X & Y
-            this.scrollPos1, this.height, 
+            this.scrollPos1, this.floorHeight, 
             // Width & Height
             this.dayFloorImg.width, this.dayFloorImg.height
         );
@@ -79,14 +79,15 @@ class Environment {
             // Src img render portion settings
             this.dayFloorImg, 0, 0, this.dayFloorImg.width / this.scale, this.dayFloorImg.height / this.scale, 
             // X & Y
-            this.scrollPos2, this.height, 
+            this.scrollPos2, this.floorHeight, 
             // Width & Height
             this.dayFloorImg.width, this.dayFloorImg.height
         );
         ctx.globalAlpha = 1;
-        // Day - Floor End
+        // Floor End
     };
 
+    // Starts day/night transition
     toggleTimeOfDay() {
         this.trans = true;
         dayTime = !dayTime;
@@ -95,7 +96,7 @@ class Environment {
     updatePosition() {
         this.scrollPos1 -= this.scrollSpeed;
         this.scrollPos2 -= this.scrollSpeed;
-        this._checkRepeat();
+        this._repeatFloor();
 
         // Day/Night transition
         if (this.trans) {
@@ -116,10 +117,10 @@ class Environment {
     };
 
     getFloor() {
-        return this.height + this.heightAdjuster;
+        return this.floorHeight + this.heightAdjuster;
     }
 
-    _checkRepeat() {
+    _repeatFloor() {
         if (this.scrollPos1 <= -this.dayFloorImg.width) {
             this.scrollPos1 = this.dayFloorImg.width;
         }
