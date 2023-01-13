@@ -1,5 +1,10 @@
 function keyDownHandler(e) {
     switch (e.code) {
+        // For testing
+        case "Backspace":
+            playerDeath();
+            break;
+
         case "Enter":
             if (!gameRunning) {
                 gameRunning = 1;

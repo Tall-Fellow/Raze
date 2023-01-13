@@ -22,68 +22,24 @@ class Environment {
 
     draw() {
         // BG Start
-        // Night
-        this.ctx.drawImage(
-            // Src img render portion settings
-            this.nightBgImg, 0, 0, this.nightBgImg.width, this.nightBgImg.height, 
-            // X & Y
-            0, 0, 
-            // Width & Height
-            cW, cH
-        );
+            // Night
+        this.ctx.drawImage(this.nightBgImg, 0, 0, cW, cH);
 
-        // Day
+            // Day
         this.ctx.globalAlpha = this.transState;
-        this.ctx.drawImage(
-            // Src img render portion settings
-            this.dayBgImg, 0, 0, this.dayBgImg.width, this.dayBgImg.height, 
-            // X & Y
-            0, 0, 
-            // Width & Height
-            cW, cH
-        );        
+        this.ctx.drawImage(this.dayBgImg, 0, 0, cW, cH);        
         this.ctx.globalAlpha = 1;
         // BG End
 
         // Floor Start
-        // Night
-        this.ctx.drawImage(
-            // Src img render portion settings
-            this.nightFloorImg, 0, 0, this.nightFloorImg.width / this.scale, this.nightFloorImg.height / this.scale, 
-            // X & Y
-            this.scrollPos1, this.floorHeight, 
-            // Width & Height
-            this.nightFloorImg.width, this.nightFloorImg.height
-        );
-        
-        this.ctx.drawImage(
-            // Src img render portion settings
-            this.nightFloorImg, 0, 0, this.nightFloorImg.width / this.scale, this.nightFloorImg.height / this.scale, 
-            // X & Y
-            this.scrollPos2, this.floorHeight, 
-            // Width & Height
-            this.nightFloorImg.width, this.nightFloorImg.height
-        );
+            // Night        
+        this.ctx.drawImage(this.nightFloorImg, this.scrollPos1, this.floorHeight, this.nightFloorImg.width, this.nightFloorImg.height);
+        this.ctx.drawImage(this.nightFloorImg, this.scrollPos2, this.floorHeight, this.nightFloorImg.width, this.nightFloorImg.height);
 
-        // Day
+            // Day
         this.ctx.globalAlpha = this.transState;
-        this.ctx.drawImage(
-            // Src img render portion settings
-            this.dayFloorImg, 0, 0, this.dayFloorImg.width / this.scale, this.dayFloorImg.height / this.scale, 
-            // X & Y
-            this.scrollPos1, this.floorHeight, 
-            // Width & Height
-            this.dayFloorImg.width, this.dayFloorImg.height
-        );
-        
-        this.ctx.drawImage(
-            // Src img render portion settings
-            this.dayFloorImg, 0, 0, this.dayFloorImg.width / this.scale, this.dayFloorImg.height / this.scale, 
-            // X & Y
-            this.scrollPos2, this.floorHeight, 
-            // Width & Height
-            this.dayFloorImg.width, this.dayFloorImg.height
-        );
+        this.ctx.drawImage(this.dayFloorImg, this.scrollPos1, this.floorHeight, this.dayFloorImg.width, this.dayFloorImg.height);
+        this.ctx.drawImage(this.dayFloorImg, this.scrollPos2, this.floorHeight, this.dayFloorImg.width, this.dayFloorImg.height);
         this.ctx.globalAlpha = 1;
         // Floor End
     };
